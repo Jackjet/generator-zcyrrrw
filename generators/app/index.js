@@ -11,7 +11,14 @@ module.exports = class extends Generator {
       'Welcome to ' + chalk.red('generator-zcy-front-starter-kit') + ' generator!'
     ));
 
-    const prompts = [{
+    const prompts = [
+      {
+        type    : 'input',
+        name    : 'repo',
+        message : '请输入Git仓库名称(不能有空格和大写字母)',
+        default : this.env.cwd.split('/').pop() // Default 当前目录名
+      },
+      {
       type    : 'input',
       name    : 'product',
       message : '请输入产品中文名称（如:网超系统）',

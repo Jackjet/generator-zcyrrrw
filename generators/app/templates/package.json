@@ -1,6 +1,6 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "3.0.0-alpha.2",
+  "name": "<%= repo %>",
+  "version": "0.0.1",
   "description": "Get started with React, Redux, and React-Router!",
   "main": "index.js",
   "engines": {
@@ -25,7 +25,6 @@
     "compile": {
       "command": "node bin/compile",
       "env": {
-
         "DEBUG": "app:*"
       }
     },
@@ -70,12 +69,6 @@
       }
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
-  },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
-  "license": "MIT",
   "dependencies": {
     "antd": "^1.1.0",
     "babel-core": "^6.23.1",
@@ -97,6 +90,7 @@
     "css-loader": "^0.26.0",
     "cssnano": "^3.7.4",
     "debug": "^2.2.0",
+    "es3ify-loader": "^0.2.0",
     "es5-shim": "^4.5.9",
     "es6-promise": "^4.1.0",
     "eventsource-polyfill": "^0.9.6",
