@@ -1,6 +1,5 @@
 import React from 'react'
 import {Menu} from 'antd'
-import './Header.scss'
 export const ZCY_Header = () => (
   <div className="header">
     <div className="logo" />

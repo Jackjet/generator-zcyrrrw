@@ -42,6 +42,7 @@ class ZCYTable extends React.Component {
 
 ZCYTable.propTypes = {
   search : React.PropTypes.func.isRequired,
+  init:React.PropTypes.func.isRequired,
   list : React.PropTypes.array
 }
 export default ZCYTable

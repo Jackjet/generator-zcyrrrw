@@ -3,8 +3,8 @@ import {Breadcrumb} from 'antd';
 import Header from '../../components/Header/index'
 import ZCYMenus from '../../components/Menus/index'
 
-import './CoreLayout.scss'
-import '../../styles/core.scss'
+import './CoreLayout.less'
+import '../../styles/core.less'
 
 class CoreLayout extends React.Component {
   constructor(props) {

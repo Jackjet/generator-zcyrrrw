@@ -1,3 +1,3 @@
 import Search from './Search'
-import style from './Search.scss'
+import './Search.less'
 export default Search

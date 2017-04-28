@@ -28,7 +28,7 @@ const APP_ENTRY = project.paths.client('main.js')
 
 webpackConfig.entry = {
   app : __DEV__
-    ? ['eventsource-polyfill','webpack-hot-middleware-ie8/client',APP_ENTRY]
+    ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
     : [APP_ENTRY],
   vendor : project.compiler_vendors
 }
@@ -94,13 +94,13 @@ if (__DEV__) {
   webpackConfig.plugins.push(
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress : {
-    //     unused    : true,
-    //     dead_code : true,
-    //     warnings  : false
-    //   }
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress : {
+        unused    : true,
+        dead_code : true,
+        warnings  : false
+      }
+    }),
     new webpack.optimize.AggressiveMergingPlugin()
   )
 }
@@ -143,13 +143,13 @@ webpackConfig.module.postLoaders = [
 const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
 
 webpackConfig.module.loaders.push({
-  test    : /\.scss$/,
+  test    : /\.less/,
   exclude : null,
   loaders : [
     'style',
     BASE_CSS_LOADER,
     'postcss',
-    'sass?sourceMap'
+    'less?sourceMap'
   ]
 })
 webpackConfig.module.loaders.push({
@@ -162,7 +162,7 @@ webpackConfig.module.loaders.push({
   ]
 })
 
-webpackConfig.sassLoader = {
+webpackConfig.lessLoader = {
   includePaths : project.paths.client('styles')
 }
 
@@ -193,8 +193,7 @@ webpackConfig.module.loaders.push(
   { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
-  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' },
-  { test:/\.htc(\?.*)?$/,    loader: 'file'}
+  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
 )
 /* eslint-enable */
 
@@ -204,6 +203,7 @@ webpackConfig.module.loaders.push(
 // when we don't know the public path (we know it only when HMR is enabled [in development]) we
 // need to use the extractTextPlugin to fix this issue:
 // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts/34133809#34133809
+if (!__DEV__) {
   debug('Applying ExtractTextPlugin to CSS loaders.')
   webpackConfig.module.loaders.filter((loader) =>
     loader.loaders && loader.loaders.find((name) => /css/.test(name.split('?')[0]))
@@ -219,5 +219,6 @@ webpackConfig.module.loaders.push(
       allChunks : true
     })
   )
+}
 
 module.exports = webpackConfig

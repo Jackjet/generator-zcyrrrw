@@ -1,3 +1,5 @@
+
+/**
 // es2015
 import 'core-js/fn/array/find'
 import 'core-js/fn/array/find-index'
@@ -21,3 +23,4 @@ import 'core-js/fn/string/trim-end'
 import 'core-js/fn/string/at'
 
 import 'core-js/fn/object/assign'
+**/
