@@ -21,19 +21,18 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    alias: {
+      components: resolve("src/components"),
+      styles: resolve("src/styles")
+    },
   },
-  // externals: {
-  //   'react/lib/ExecutionEnvironment': true,
-  //   'react/lib/ReactContext':true,
-  //   'react/addons': true
-  // },
   module: {
-    
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        exclude: process.env.NODE_ENV === 'production' ? '' : /node_modules/
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
