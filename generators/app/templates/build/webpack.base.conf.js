@@ -7,7 +7,7 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-debug('Creating Base configuration')
+debug('创建webpakc base配置')
 
 module.exports = {
   entry: {
@@ -65,3 +65,4 @@ module.exports = {
     ]
   }
 }
+debug('webpakc base配置创建成功')

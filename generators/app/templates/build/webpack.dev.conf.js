@@ -13,7 +13,7 @@ Object.keys(baseWebpackConfig.entry).forEach((name) => {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
-debug('Creating Development configuration');
+debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置`)
 
 module.exports = merge(baseWebpackConfig, {
   module: {
@@ -54,3 +54,5 @@ module.exports = merge(baseWebpackConfig, {
     new FriendlyErrorsPlugin()
   ]
 })
+
+debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置成功`)

@@ -3,12 +3,13 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
+const debug = require('debug')('app:config:prod')
 const baseWebpackConfig = require('./webpack.base.conf')
 //const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 //const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-
+debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置`)
 let webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -26,19 +27,19 @@ let webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': config.build.env
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      sourceMap: true
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   },
+    //   sourceMap: true
+    // }),
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css')
     }),
 
     new HtmlWebpackPlugin({
       filename: config.build.index,
-      template: 'index.html',
+      template: './src/index.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -83,5 +84,5 @@ let webpackConfig = merge(baseWebpackConfig, {
     }),
   ]
 })
-
+debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置成功`)
 module.exports = webpackConfig

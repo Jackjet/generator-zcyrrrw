@@ -7,7 +7,7 @@ export const HomeView = () => (
     <img
       alt='This is a duck, because Redux!'
       className='duck'
-      src={DuckImage} />
+      src='/static/Duck.jpg' />
   </div>
 )
 
