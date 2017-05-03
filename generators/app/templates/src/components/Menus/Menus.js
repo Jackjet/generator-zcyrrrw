@@ -8,7 +8,7 @@ const menusData=[
     "items":[
       {
         "path":"/",
-        "title":"home"
+        "title":"me"
       },
       {
         "path":"/table",

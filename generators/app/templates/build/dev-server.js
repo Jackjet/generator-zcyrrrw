@@ -5,17 +5,19 @@ const webpackConfig = require('./webpack.dev.conf')
 const express = require('express')
 const proxyMiddleware = require('http-proxy-middleware')
 const opn = require('opn')
-const debug = require('debug')('app:config:project')
+const debug = require('debug')('app:server')
 
+debug('')
 let port = process.env.PORT || config.dev.port
 let autoOpenBrowser = !!config.dev.autoOpenBrowser
 
 let proxyTable = config.dev.proxyTable
 
 let app = express()
-
+debug('webpack compiler')
 let compiler = webpack(webpackConfig)
-
+debug('webpack compiler complete')
+debug('begin add webpack-dev-middleware')
 let devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: false,
