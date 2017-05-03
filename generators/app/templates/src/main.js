@@ -28,6 +28,8 @@ let render = () => {
   )
 }
 
+
+
 // This code is excluded from production bundle
 // if (__DEV__) {
 //   if (module.hot) {
@@ -63,3 +65,4 @@ let render = () => {
 // Go!
 // ========================================================
 render()
+

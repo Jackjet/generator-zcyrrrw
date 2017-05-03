@@ -12,7 +12,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置`)
 let webpackConfig = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({
+    loaders: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
     })
@@ -33,9 +33,8 @@ let webpackConfig = merge(baseWebpackConfig, {
     //   },
     //   sourceMap: true
     // }),
-    new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css')
-    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
 
     new HtmlWebpackPlugin({
       filename: config.build.index,

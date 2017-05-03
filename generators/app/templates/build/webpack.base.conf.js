@@ -11,13 +11,7 @@ debug('创建webpakc base配置')
 
 module.exports = {
   entry: {
-    app: './src/main.js',
-    // vendor: [
-    //   'react',
-    //   'react-redux',
-    //   'react-router',
-    //   'redux'
-    // ]
+    app: './src/main.js'
   },
   output: {
     path: config.build.assetsRoot,
@@ -27,7 +21,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['', '.js', '.jsx']
   },
   // externals: {
   //   'react/lib/ExecutionEnvironment': true,
@@ -35,21 +29,16 @@ module.exports = {
   //   'react/addons': true
   // },
   module: {
-    rules: [
+    
+    loaders: [
       {
         test: /\.jsx?$/,
-        exclude : /node_modules/,
-        loader: 'babel-loader',
-        query:{
-          cacheDirectory : true,
-          presets: [['es2015', { "loose": true }],'stage-0'],
-          plugins: ["transform-es3-property-literals", "transform-es3-member-expression-literals"]
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
-        options: {
+        query: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
@@ -57,10 +46,16 @@ module.exports = {
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
-        options: {
+        query: {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      }
+    ],
+    postLoaders: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'es3ify-loader'
       }
     ]
   }

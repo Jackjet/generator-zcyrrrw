@@ -12,40 +12,29 @@ exports.assetsPath = (_path) => {
 exports.cssLoaders = (options) => {
   options = options || {}
 
-  let cssLoader = {
-    loader: 'css-loader',
-    options: {
-      minimize: process.env.NODE_ENV === 'production',
-      sourceMap: options.sourceMap
-    }
-  }
-
-  function generateLoaders(loader, loaderOptions){
-    let loaders = [cssLoader]
-    if(loader){
-      loaders.push({
-        loader: loader + '-loader',
-        options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
-        })
-      })
-    }
+  function generateLoaders(loaders){
+    let sourceLoader = loaders.map(function (loader) {
+      let extraParamChar
+      if (/\?/.test(loader)) {
+        loader = loader.replace(/\?/, '-loader?')
+        extraParamChar = '&'
+      } else {
+        loader = loader + '-loader'
+        extraParamChar = '?'
+      }
+      return loader + (options.sourceMap ? extraParamChar + 'sourceMap' : '')
+    }).join('!')
 
     if(options.extract){
-      return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'style-loader'
-      })
+      return ExtractTextPlugin.extract('style-loader', sourceLoader)
     }else{
-      return ['style-loader'].concat(loaders)
+      return ['style-loader', sourceLoader].join('!')
     }
   }
 
   return {
-    css: generateLoaders(),
-    less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    css: generateLoaders(['css']),
+    less: generateLoaders(['css', 'less']),
   }
 }
 
@@ -58,7 +47,7 @@ exports.styleLoaders = (options) => {
     let loader = loaders[extension]
     output.push({
       test: new RegExp('\\.' + extension + '$'),
-      use: loader
+      loader: loader
     })
   }
   return output
