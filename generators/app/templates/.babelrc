@@ -5,13 +5,9 @@
 
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "ie": 8
-      }
-    }],
     "react",
     "stage-0",
     "es2015"
-  ]
+  ],
+  "plugins": ["react-hot-loader/babel"]
 }

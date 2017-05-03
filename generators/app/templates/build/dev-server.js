@@ -5,6 +5,7 @@ const webpackConfig = require('./webpack.dev.conf')
 const express = require('express')
 const proxyMiddleware = require('http-proxy-middleware')
 const opn = require('opn')
+const debug = require('debug')('app:config:project')
 
 let port = process.env.PORT || config.dev.port
 let autoOpenBrowser = !!config.dev.autoOpenBrowser
@@ -17,7 +18,14 @@ let compiler = webpack(webpackConfig)
 
 let devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
-  quiet: true
+  quiet: false,
+  noInfo: false,
+  lazy: false,
+  stats: {
+    chunks : false,
+    chunkModules : false,
+    colors : true
+  }
 })
 
 let hotMiddleware = require('webpack-hot-middleware')(compiler, {
