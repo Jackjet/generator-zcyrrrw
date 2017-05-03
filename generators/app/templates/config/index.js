@@ -17,7 +17,6 @@ module.exports = {
     autoOpenBrowser: true,
     cssSourceMap: false,
     proxyTable: {
-      
     }
   }
 }
