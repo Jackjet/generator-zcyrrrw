@@ -42,6 +42,8 @@ Object.keys(proxyTable).forEach((context) => {
   app.use(proxyMiddleware(options.filter || context, options))
 })
 
+app.use(require('connect-history-api-fallback')())
+
 app.use(devMiddleware)
 
 app.use(hotMiddleware)

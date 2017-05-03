@@ -1,4 +1,5 @@
 const utils = require('./utils')
+const path = require('path')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
@@ -23,6 +24,23 @@ module.exports = merge(baseWebpackConfig, {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor']
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
