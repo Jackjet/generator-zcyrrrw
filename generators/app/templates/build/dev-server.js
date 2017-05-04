@@ -8,6 +8,7 @@ const httpProxy = require('http-proxy')
 const proxy = httpProxy.createProxyServer()
 const opn = require('opn')
 const debug = require('debug')('app:server')
+const bodyParser = require("body-parser"); 
 
 const Promise = require('bluebird')
 const request = require('request')
@@ -32,10 +33,6 @@ function jsonParse(data) {
 
 function getUaaHostpath() {
   return 'http://login.dev.cai-inc.com'
-}
-
-function getMiddlePath() {
-  return 'http://middle.dev.cai-inc.com'
 }
 
 function getOauthUri () {
@@ -76,9 +73,12 @@ debug('设置server启动配置')
 let port = process.env.PORT || config.dev.port
 let autoOpenBrowser = !!config.dev.autoOpenBrowser
 
-let proxyTable = config.dev.proxyTable
+let proxyOptions = config.dev.proxyOptions
+let HOST = proxyOptions.HOST || 'http://middle.dev.cai-inc.com'
+let proxyTable = proxyOptions.proxyTable
 
 let app = express()
+app.use(bodyParser.urlencoded({ extended: false }));
 debug('编译webpack配置')
 let compiler = webpack(webpackConfig)
 debug('webpack编译完成')
@@ -134,16 +134,18 @@ Object.keys(proxyTable).forEach((context) => {
   //     target: options
   //   }
   // }
-
+//仅支持get请求
   app.all(context, (req, res) => {
     let options = {
-      url: getMiddlePath() + req.path,
+      url: HOST + req.url,
       headers: {
         "Authorization": authorizationValue
-      }
+      },
+      method: req.method
     }
+    console.log(req.body, req.path, req.url, req.query)
     request(options, function(error, response, body){
-      if(!/^2/.test(response.statusCode)){
+      if(!error && response.statusCode === 200){
         res.send(jsonParse(response.body))
       }else{
         let fs = require('../mockData')

@@ -16,8 +16,6 @@ module.exports = {
     assetsSubDirectory: 'static',
     autoOpenBrowser: true,
     cssSourceMap: false,
-    proxyTable: {
-      "/api/*": {}
-    }
+    proxyOptions: require('./proxy')
   }
 }
