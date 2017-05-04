@@ -123,39 +123,39 @@ app.all('/*', (req, res, next) => {
   next()
 })
 
-// app.all('/api/zoss/*', (req, res) => {
-//   console.log(req.headers)
-//   let options = {
-//     host: getMiddlePath(),
-//     Authorization: authorizationValue,
-//     path: req.path
-//   }
-//   console.log(options)
-//   let b = http.request(options, function(res){
-//     console.log('STATUS: ' + res.statusCode);
-//   })
 
-//   b.on('error', function(e){
-//     console.log(e)
-//   })
-// })
 
 
 
 Object.keys(proxyTable).forEach((context) => {
-  let options = proxyTable[context]
-  if(typeof options === 'string'){
-    options = {
-      target: options
-    }
-  }
+  // let options = proxyTable[context]
+  // if(typeof options === 'string'){
+  //   options = {
+  //     target: options
+  //   }
+  // }
 
   app.all(context, (req, res) => {
-    let fs = require('../mockData')
-    let data = fs[req.path]
-    if(data){
-      res.send(data());
+    let options = {
+      url: getMiddlePath() + req.path,
+      headers: {
+        "Authorization": authorizationValue
+      }
     }
+    request(options, function(error, response, body){
+      if(!/^2/.test(response.statusCode)){
+        res.send(jsonParse(response.body))
+      }else{
+        let fs = require('../mockData')
+        
+        let data = fs[req.path]
+        if(data){
+          res.send(data());
+        }else{
+          res.send()
+        }
+      }
+    })
   })
 })
 
