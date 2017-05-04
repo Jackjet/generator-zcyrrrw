@@ -1,11 +1,76 @@
 const config = require('../config')
+const http = require('http')
 const path = require('path')
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.dev.conf')
 const express = require('express')
-const proxyMiddleware = require('http-proxy-middleware')
+const httpProxy = require('http-proxy')
+const proxy = httpProxy.createProxyServer()
 const opn = require('opn')
 const debug = require('debug')('app:server')
+
+const Promise = require('bluebird')
+const request = require('request')
+Promise.promisifyAll(request)
+
+//设置默认用户名密码
+const authorName = '339900864'
+const authorPassword = '123456'
+
+const authStr = new Buffer('zcyadmin:vK6olR5IzoceCP8u').toString('base64')
+const baseAuthStr = 'Basic ' + authStr // 基础接口对接的校验参数
+// 调用接口时的校验参数
+let authorizationValue = ''
+
+function jsonParse(data) {
+  try {
+    return JSON.parse(data)
+  } catch (e) {
+    return {}
+  }
+}
+
+function getUaaHostpath() {
+  return 'http://login.dev.cai-inc.com'
+}
+
+function getMiddlePath() {
+  return 'http://middle.dev.cai-inc.com'
+}
+
+function getOauthUri () {
+  return getUaaHostpath() + '/oauth/token?grant_type=password&username=' + authorName + '&password=' + authorPassword
+}
+
+function getAuthorization () {
+  // 已经存在，直接返回
+  if (authorizationValue) {
+    return Promise.resolve(authorizationValue)
+  }
+
+  const oauthUri = getOauthUri()
+  return request.postAsync({
+    uri: oauthUri,
+    headers: {
+      Authorization: baseAuthStr
+    }
+  })
+  .then(function (res) {
+    
+    const data = jsonParse(res.body)
+    const tokenType = data.token_type
+    
+    const accessToken = data.access_token
+    authorizationValue = tokenType + ' ' + accessToken
+
+    console.log(authorizationValue);
+  })
+  .then(function () {
+    // 一小时执行
+    return authorizationValue
+  })
+}
+getAuthorization()
 
 debug('设置server启动配置')
 let port = process.env.PORT || config.dev.port
@@ -47,6 +112,36 @@ compiler.plugin('compilation', (compilation) => {
 
 
 debug('设置代理信息')
+
+// proxy.on('proxyReq', function (proxyReq, req, res, options) {
+//   proxyReq.setHeader('Authorization', authorizationValue)
+//   console.log(res)
+// })
+
+app.all('/*', (req, res, next) => {
+  console.info('请求', req.path)
+  next()
+})
+
+// app.all('/api/zoss/*', (req, res) => {
+//   console.log(req.headers)
+//   let options = {
+//     host: getMiddlePath(),
+//     Authorization: authorizationValue,
+//     path: req.path
+//   }
+//   console.log(options)
+//   let b = http.request(options, function(res){
+//     console.log('STATUS: ' + res.statusCode);
+//   })
+
+//   b.on('error', function(e){
+//     console.log(e)
+//   })
+// })
+
+
+
 Object.keys(proxyTable).forEach((context) => {
   let options = proxyTable[context]
   if(typeof options === 'string'){
@@ -55,7 +150,13 @@ Object.keys(proxyTable).forEach((context) => {
     }
   }
 
-  app.use(proxyMiddleware(options.filter || context, options))
+  app.all(context, (req, res) => {
+    let fs = require('../mockData')
+    let data = fs[req.path]
+    if(data){
+      res.send(data());
+    }
+  })
 })
 
 
