@@ -27,6 +27,9 @@ module.exports = {
       styles: resolve("src/styles")
     },
   },
+  postcss: () => {
+    return [require('autoprefixer')]
+  },
   module: {
     loaders: [
       {
