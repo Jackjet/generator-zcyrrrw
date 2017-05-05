@@ -164,8 +164,9 @@ debug('添加history-fallback中间件')
 app.use(require('connect-history-api-fallback')())
 debug('添加webpack-dev-middleware中间件')
 app.use(devMiddleware)
-debug('添加webpack-hot-middleware中间件')
+
 if(process.env.BROWSER !== 'ie8'){
+  debug('添加webpack-hot-middleware中间件')
   app.use(hotMiddleware)
 }
 debug('设置静态文件托管目录')
