@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "<%= repo %>",
   "version": "0.0.1",
   "description": "Get started with React, Redux, and React-Router!",
   "main": "index.js",
@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "antd": "^1.11.6",
+    "axios": "^0.16.1",
     "body-parser": "^1.17.1",
     "es6-promise": "^4.1.0",
     "http-proxy": "^1.16.2",
