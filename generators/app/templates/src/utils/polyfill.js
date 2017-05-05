@@ -1,4 +1,5 @@
-
+import es6Promise from 'es6-promise'
+typeof Promise !== 'function' && es6Promise.polyfill()
 /**
 // es2015
 import 'core-js/fn/array/find'

@@ -1,7 +1,6 @@
-import es6Promise from 'es6-promise'
-typeof Promise !== 'function' && es6Promise.polyfill()
 
-import './untils/polyfill'
+
+import 'utils/polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'

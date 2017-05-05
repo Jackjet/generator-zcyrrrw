@@ -10,9 +10,11 @@ class CoreLayout extends React.Component {
   constructor(props) {
     super(props)
   }
-
+  componentDidMount(){
+    this.props.getMenus();
+  }
   render() {
-    const children = this.props.children;
+    const {children} = this.props;
     return <div>
               <Header/>
                 <div style={{background: '#fff',float: "left",width:"20%"}}>

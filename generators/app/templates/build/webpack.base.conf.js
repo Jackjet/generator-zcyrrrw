@@ -24,6 +24,8 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       components: resolve("src/components"),
+      store:resolve("src/store"),
+      utils:resolve("src/utils"),
       styles: resolve("src/styles")
     },
   },
