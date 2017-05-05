@@ -1,6 +1,6 @@
 import React from 'react';
 import {Table} from 'antd';
-import Search from '../../../components/Search';
+import Search from 'components/Search';
 
 const columns = [
   {title: 'Full Name', width: 100, dataIndex: 'name', key: '10', fixed: 'left'},

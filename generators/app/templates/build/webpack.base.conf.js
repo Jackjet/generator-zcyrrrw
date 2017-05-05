@@ -53,13 +53,7 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
-    ],
-    postLoaders: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'es3ify-loader'
-      }
-    ]
+    ]  
   }
 }
 debug('webpakc base配置创建成功')

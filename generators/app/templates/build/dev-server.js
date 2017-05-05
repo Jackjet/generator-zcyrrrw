@@ -2,7 +2,7 @@ const config = require('../config')
 const http = require('http')
 const path = require('path')
 const webpack = require('webpack')
-const webpackConfig = require('./webpack.dev.conf')
+const webpackConfig = process.env.BROWSER !== 'ie8' ? require('./webpack.dev.conf') : require('./webpack.dev.ie8.conf')
 const express = require('express')
 const httpProxy = require('http-proxy')
 const proxy = httpProxy.createProxyServer()
@@ -59,8 +59,6 @@ function getAuthorization () {
     
     const accessToken = data.access_token
     authorizationValue = tokenType + ' ' + accessToken
-
-    console.log(authorizationValue);
   })
   .then(function () {
     // 一小时执行
@@ -167,7 +165,9 @@ app.use(require('connect-history-api-fallback')())
 debug('添加webpack-dev-middleware中间件')
 app.use(devMiddleware)
 debug('添加webpack-hot-middleware中间件')
-app.use(hotMiddleware)
+if(process.env.BROWSER !== 'ie8'){
+  app.use(hotMiddleware)
+}
 debug('设置静态文件托管目录')
 let staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 

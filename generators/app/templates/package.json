@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "DEBUG=app:* node build/dev-server",
+    "ie8": "BROWSER=ie8 DEBUG=app:* node build/dev-server",
     "lint": "eslint bin build config server src tests",
     "build": "DEBUG=app:* node build/build",
     "dll": "node build/dll"
@@ -17,8 +18,10 @@
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.1.0",
     "babel-loader": "^6.4.1",
+    "babel-plugin-antd": "^0.5.1",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",

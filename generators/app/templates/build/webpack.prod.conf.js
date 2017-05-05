@@ -15,7 +15,13 @@ let webpackConfig = merge(baseWebpackConfig, {
     loaders: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
-    })
+    }),
+    postLoaders: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'es3ify-loader'
+      }
+    ]
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
@@ -27,12 +33,14 @@ let webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': config.build.env
     }),
+
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {
     //     warnings: false
     //   },
     //   sourceMap: true
     // }),
+
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
 
@@ -63,24 +71,24 @@ let webpackConfig = merge(baseWebpackConfig, {
      * 三方依赖库抽取
      */
 
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    //   minChunks: function (module, count) {
-    //     // any required modules inside node_modules are extracted to vendor
-    //     return (
-    //       module.resource &&
-    //       /\.js$/.test(module.resource) &&
-    //       module.resource.indexOf(
-    //         path.join(__dirname, '../node_modules')
-    //       ) === 0
-    //     )
-    //   }
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    }),
 
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'manifest',
-    //   chunks: ['vendor']
-    // }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor']
+    }),
   ]
 })
 debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置成功`)
