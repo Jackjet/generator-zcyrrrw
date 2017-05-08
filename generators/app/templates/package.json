@@ -9,7 +9,8 @@
     "ie8": "BROWSER=ie8 DEBUG=app:* node build/dev-server",
     "lint": "eslint bin build config server src tests",
     "build": "DEBUG=app:* node build/build",
-    "dll": "node build/dll"
+    "dll": "node build/dll",
+    "uglify": "node build/uglify"
   },
   "author": "snail",
   "license": "MIT",
@@ -54,6 +55,7 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "rimraf": "^2.6.1",
     "style-loader": "^0.16.1",
+    "uglify-js": "^2.8.23",
     "url-loader": "^0.5.8",
     "webpack": "^1.15.0",
     "webpack-dev-middleware": "^1.10.1",
