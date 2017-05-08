@@ -4,24 +4,20 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const debug = require('debug')('app:config:prod')
+const es3ifyPlugin = require('es3ify-webpack-plugin')
 const baseWebpackConfig = require('./webpack.base.conf')
 //const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 //const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+
 debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置`)
 let webpackConfig = merge(baseWebpackConfig, {
   module: {
     loaders: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
-    }),
-    postLoaders: [
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'es3ify-loader'
-      }
-    ]
+    })
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
@@ -43,7 +39,7 @@ let webpackConfig = merge(baseWebpackConfig, {
 
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
-
+    new es3ifyPlugin(),
     new HtmlWebpackPlugin({
       filename: config.build.index,
       template: './src/index.html',
