@@ -1,5 +1,5 @@
 {
-  "name": "<%= repo %>",
+  "name": "test",
   "version": "0.0.1",
   "description": "Get started with React, Redux, and React-Router!",
   "main": "index.js",
@@ -9,8 +9,7 @@
     "ie8": "BROWSER=ie8 DEBUG=app:* node build/dev-server",
     "lint": "eslint bin build config server src tests",
     "build": "DEBUG=app:* node build/build",
-    "dll": "node build/dll",
-    "uglify": "node build/uglify"
+    "dll": "node build/dll"
   },
   "author": "snail",
   "license": "MIT",
@@ -26,6 +25,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "bluebird": "^3.5.0",
     "chalk": "^1.1.3",
     "connect-history-api-fallback": "^1.3.0",
     "css-loader": "^0.28.0",
@@ -53,6 +53,7 @@
     "ora": "^1.2.0",
     "postcss-loader": "^1.3.3",
     "react-hot-loader": "^3.0.0-beta.6",
+    "request": "^2.81.0",
     "rimraf": "^2.6.1",
     "style-loader": "^0.16.1",
     "uglify-js": "^2.8.23",

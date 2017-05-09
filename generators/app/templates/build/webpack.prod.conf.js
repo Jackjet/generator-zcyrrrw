@@ -30,12 +30,16 @@ let webpackConfig = merge(baseWebpackConfig, {
       'process.env': config.build.env
     }),
 
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false
-    //   },
-    //   sourceMap: true
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        screw_ie8: false,
+        warnings: false
+      },
+      mangle: {
+        screw_ie8: false
+      },
+      sourceMap: true
+    }),
 
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
