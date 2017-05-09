@@ -6,7 +6,7 @@ import { injectReducer } from 'store/reducers'
 import CoreLayout from './CoreLayout'
 
 const mapDispatchToProps = {
-  getMenus :()=>getMenusAction(1)
+  getMenus :()=>getMenusAction({id:1,a:2})
 }
 
 const mapStateToProps = (state) => ({

@@ -1,18 +1,16 @@
 module.exports = {
-  '/api/zoss/getDownLoadUrl': function () {
+  "/api/zoss/getDownLoadUrl": function(){
     return {
       id: 1,
       name: 'test'
     }
   },
-  '/api/test': function (req) {
-    if (req.method === 'POST') {
-      return {
-        result: 'post'
-      }
-    }
+  "/api/article/list":function () {
     return {
-      result: 'get'
+      data:{
+        id: 1,
+        name: 'test'
+      }
     }
   }
 }
