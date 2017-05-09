@@ -1,18 +1,20 @@
 import React from 'react'
 import {Breadcrumb} from 'antd';
-import Header from '../../components/Header/index'
-import ZCYMenus from '../../components/Menus/index'
+import Header from 'components/Header/index'
+import ZCYMenus from 'components/Menus/index'
 
 import './CoreLayout.less'
-import '../../styles/core.less'
+import 'styles/core.less'
 
 class CoreLayout extends React.Component {
   constructor(props) {
     super(props)
   }
-
+  componentDidMount(){
+    this.props.getMenus();
+  }
   render() {
-    const children = this.props.children;
+    const {children} = this.props;
     return <div>
               <Header/>
                 <div style={{background: '#fff',float: "left",width:"20%"}}>

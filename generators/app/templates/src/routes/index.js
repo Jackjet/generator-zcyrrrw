@@ -5,12 +5,13 @@ import TableRoute from './Table'
 import ZCYFormRoute from './ZCYForm'
 
 
+
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
 
 export const createRoutes = (store) => ({
   path        : '/',
-  component   : CoreLayout,
+  component   : CoreLayout(store),
   indexRoute  : Home,
   childRoutes : [
     TableRoute(store),
