@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "<%= repo %>",
   "version": "0.0.1",
   "description": "Get started with React, Redux, and React-Router!",
   "main": "index.js",

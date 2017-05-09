@@ -3,14 +3,14 @@ import axios from 'axios';
 axios.interceptors.request.use(function (config) {
   return config;
 }, function (error) {
-    alert("出错了！")
+    
   return Promise.reject(error);
 });
 
 axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  alert("出错了！")
+  
   return Promise.reject(error);
 });
 
