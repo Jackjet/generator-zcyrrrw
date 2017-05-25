@@ -1,12 +1,10 @@
 import axios from 'axios';
 
 axios.interceptors.request.use(config => config, (error) => {
-  alert('出错了！');
   return Promise.reject(error);
 });
 
-axios.interceptors.response.use(response => response, (error) => {
-  alert('出错了！');
+axios.interceptors.response.use(response => response.data, (error) => {
   return Promise.reject(error);
 });
 
