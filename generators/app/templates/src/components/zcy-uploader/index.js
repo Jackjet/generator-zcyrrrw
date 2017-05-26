@@ -6,22 +6,23 @@ import {
   getKey,
   transform,
   setFileIdForIE,
-} from '../zcy-oss'
+} from './oss'
+
 
 export default class Uploader extends Component {
   static propTypes = {
     bizCode: PropTypes.string,
     userId: PropTypes.string,
-    fileList: PropTypes.array
+    defaultFileList: PropTypes.array
   }
 
   state = {
     oss: null,
-    fileList: [],
+    defaultFileList: [],
   }
 
   componentDidMount() {
-    let files = this.props.fileList || this.props.defaultFileList || []
+    let files = this.props.defaultFileList
     getKey(this.props.bizCode, this.props.userId)
       .then((oss) => {
         return transform(files).then((fileList) => {
@@ -34,21 +35,16 @@ export default class Uploader extends Component {
   }
 
   render() {
-    console.info(this.props.fileList, this.state.fileList)
-    if (this.props.fileList && this.props.fileList.length && (!this.state.fileList || !this.state.fileList.length)) {
-      return null
+    if (this.props.defaultFileList && this.props.defaultFileList.length && (!this.state.fileList || !this.state.fileList.length)) {
+      return <span></span>
     }
 
-    console.info('render.......', this.state.fileList)
     let props = {
       ...this.props,
       ...this.state.oss,
-      fileList: this.state.fileList,
-      // ...this.state,
+      defaultFileList: this.state.fileList,
       beforeSuccess: setFileIdForIE,
     };
-
-    // console.info('render', props)
 
     return (
       <Upload {...props} />

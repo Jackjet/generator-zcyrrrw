@@ -5,11 +5,6 @@ import getFileItem from './getFileItem';
 import { extension } from './mime';
 import classNames from 'classnames';
 const prefixCls = 'ant-upload';
-import {
-  getKey,
-  transform,
-  setFileIdForIE,
-} from '../zcy-oss'
 
 function noop() {
 }
@@ -221,12 +216,10 @@ export default class ZcyUpload extends React.Component {
   }
 
   onChange = (info) => {
-    // if (!('fileList' in this.props)) {
+    if (!('fileList' in this.props)) {
       this.setState({fileList: info.fileList});
-    // }
-    console.info('onChange111', this.state.fileList, info.fileList)
+    }
     this.props.onChange(info);
-    console.info('onChange222', this.state.fileList, this.props)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -235,24 +228,6 @@ export default class ZcyUpload extends React.Component {
         fileList: nextProps.fileList || [],
       });
     }
-    console.info('componentWillReceiveProps', this.state.fileList)
-  }
-
-  componentDidMount() {
-    let files = this.props.fileList || this.props.defaultFileList || []
-    getKey(this.props.bizCode, this.props.userId)
-      .then((oss) => {
-        return transform(files).then((fileList) => {
-          this.setState({
-            oss,
-            // fileList,
-          })
-
-          this.onChange({
-            fileList,
-          })
-        })
-      })
   }
 
   onFileDrop = (e) => {
@@ -347,9 +322,9 @@ export default class ZcyUpload extends React.Component {
 
   render() {
     let uploadList;
-    if (!this.props.fileList || !this.props.fileList.length) {
-      return (<span></span>)
-    }
+    // if (!this.props.fileList || !this.props.fileList.length || !this.props.oss) {
+    //   return (<span></span>)
+    // }
 
     let type = this.props.type || 'select';
     let props = {
