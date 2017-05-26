@@ -12,12 +12,12 @@ const MENUS = 'MENUS';
 
 export const getMenusAction = (data) => {
   return (dispatch) => {
-    getMenus(data).then((res)=>{
-      dispatch({
-        type: MENUS,
-        payload: res.data
-      })
-    })
+    // getMenus(data).then((res)=>{
+    //   dispatch({
+    //     type: MENUS,
+    //     payload: res.data
+    //   })
+    // })
   }
 }
 

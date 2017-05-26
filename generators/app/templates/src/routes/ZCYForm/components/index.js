@@ -3,6 +3,10 @@ import React from 'react';
 import { Form, Select, InputNumber, DatePicker, TimePicker, Switch, Radio,
   Cascader, Slider, Button, Col, Upload, Icon } from 'antd';
 
+import Request from '../../../utils/request'
+import ZcyUploader from '../../../components/uploader'
+// import ZcyUploader from '../../../components/zcy-uploader'
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioButton = Radio.Button;
@@ -21,20 +25,76 @@ const areaData = [{
   }],
 }];
 
+let uploaderProps = {
+  listType: 'picture',
+  maxFile: 3,
+  beforeUpload(file) {
+    console.log('beforeUpload', file.name);
+  },
+  onStart: (file) => {
+    console.log('onStart', file.name);
+  },
+  onSuccess(file) {
+    console.log('onSuccess', file);
+  },
+  // onChange(file) {
+  //   console.info('onchange....')
+  // },
+  onProgress(step, file) {
+    console.log('onProgress', Math.round(step.percent), file.name);
+  },
+  onError(err, type, file) {
+    if (type == 'maxFile') {
+       console.log('onError maxFile');
+    }
+  },
+}
+
 let Demo = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     console.log('收到表单值：', this.props.form.getFieldsValue());
   },
 
-  normFile(e) {
+  normFile(e, prevValue, allValues) {
     if (Array.isArray(e)) {
       return e;
     }
     return e && e.fileList;
   },
 
+  componentWillMount() {
+    const { getFieldProps } = this.props.form;
+    /**
+     * 获取上传的token
+     */
+    let props = {
+      ...getFieldProps('logo', {
+        valuePropName: 'fileList',
+        normalize: this.normFile,
+      }),
+      ...uploaderProps,
+      bizCode: '1099',
+      userId: '100012584',
+      fileList: [{
+        fileId: '1099OT/null/1000139122/3bc7f03f-230d-4d2e-8a7d-613e2c89ac84',
+        name: 'test.jpg',
+        type: 'image/png',
+        size: 1024
+      }, {
+        fileId: '1099OT/339900/100012584/92128f04-926d-4126-94d1-acbdc7e76d22',
+        name: 'test.jpg',
+        type: 'image/png',
+        size: 1024
+      }]
+    }
+
+    this.setState({uploaderProps: props})
+    return null
+  },
+
   render() {
+    // console.info('this.state.uploaderProps', this.state.uploaderProps)
     const { getFieldProps } = this.props.form;
     return (
       <Form horizontal onSubmit={this.handleSubmit} >
@@ -145,23 +205,21 @@ let Demo = React.createClass({
           </RadioGroup>
         </FormItem>
 
-        <FormItem
+        {
+        this.state.uploaderProps &&
+          <FormItem
           label="logo图"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
           help="提示信息要长长长长长长长长长长长长长长"
         >
-          <Upload name="logo" action="/upload.do" listType="picture" onChange={this.handleUpload}
-                  {...getFieldProps('upload', {
-                    valuePropName: 'fileList',
-                    normalize: this.normFile,
-                  })}
-          >
+          <ZcyUploader {...this.state.uploaderProps}>
             <Button type="ghost">
               <Icon type="upload" /> 点击上传
             </Button>
-          </Upload>
+          </ZcyUploader>
         </FormItem>
+        }
 
         <FormItem wrapperCol={{ span: 16, offset: 8 }} style={{ marginTop: 24 }}>
           <Button type="primary" htmlType="submit">确定</Button>
