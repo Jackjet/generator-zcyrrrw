@@ -35,7 +35,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js?$/,
         loader: 'babel-loader',
         exclude: process.env.NODE_ENV === 'production' ? '' : /node_modules/
       },

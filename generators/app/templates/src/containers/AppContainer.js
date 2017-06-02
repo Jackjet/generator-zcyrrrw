@@ -21,7 +21,7 @@ class AppContainer extends Component {
 }
 
 AppContainer.propTypes = {
-  routes: React.PropTypes.array.isRequired,
+  routes: React.PropTypes.object.isRequired,
   store: React.PropTypes.object.isRequired
 };
 

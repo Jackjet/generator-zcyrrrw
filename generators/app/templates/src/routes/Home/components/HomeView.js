@@ -1,7 +1,8 @@
 import React from 'react'
 import DuckImage from '../assets/Duck.jpg'
+import BaseComponent from 'components/BaseComponent'
 
-export const HomeView = () => (
+const HomeView = () => (
   <div>
     <h4>Welcome!</h4>
     <img
@@ -11,4 +12,4 @@ export const HomeView = () => (
   </div>
 )
 
-export default HomeView
+export default BaseComponent(HomeView)

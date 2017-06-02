@@ -5,7 +5,7 @@ import request  from 'utils/request';
 
 export function getMenus(data) {
   return request({
-    url: '/article/list',
+    url: '/api/article/list',
     method: 'get',
     params:data
   });
