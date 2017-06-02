@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>React Redux Starter Kit</title>
@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-
-
   <!-- Polyfills -->
   <!--[if lt IE 10]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -17,6 +15,15 @@
   <!--[if IE 8]>
     <script src="https://t.alipayobjects.com/images/rmsweb/T1q8JiXftaXXXXXXXX.js"></script>
   <![endif]-->
+  <script>
+    window.matchMedia = window.matchMedia || function () {
+      return {
+        matches : false,
+        addListener : function() {},
+        removeListener: function() {}
+      };
+    };
+  </script>
   <div id="root" style="height: 100%"></div>
 </body>
 

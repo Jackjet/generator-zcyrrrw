@@ -1,15 +1,14 @@
 // We only need to import the modules necessary for initial render
-import CoreLayout from '../layouts/CoreLayout'
-import Home from './Home'
-import TableRoute from './Table'
-import ZCYFormRoute from './ZCYForm'
-
+import CoreLayout from '../layouts/CoreLayout';
+import Home from './Home';
+import TableRoute from './ZCYTable';
+import ZCYFormRoute from './ZCYForm';
 
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
 
-export const createRoutes = (store) => ({
+export const createRoutes = store => ({
   path        : '/',
   component   : CoreLayout(store),
   indexRoute  : Home,
@@ -17,7 +16,7 @@ export const createRoutes = (store) => ({
     TableRoute(store),
     ZCYFormRoute(store)
   ]
-})
+});
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
     using getChildRoutes with the following signature:
@@ -37,4 +36,4 @@ export const createRoutes = (store) => ({
     when the route exists and matches.
 */
 
-export default createRoutes
+export default createRoutes;

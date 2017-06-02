@@ -16,7 +16,8 @@ module.exports = merge(baseWebpackConfig, {
   module: {
     loaders: utils.styleLoaders({
       sourceMap: config.dev.cssSourceMap,
-      extract: true
+      extract: true,
+      minimize: true
     })
   },
   //devtool: '#cheap-module-eval-source-map',

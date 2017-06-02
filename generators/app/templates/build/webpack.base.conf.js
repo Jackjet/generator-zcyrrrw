@@ -35,7 +35,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js?$/,
         loader: 'babel-loader',
         exclude: process.env.NODE_ENV === 'production' ? '' : /node_modules/
       },
@@ -55,7 +55,7 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
-    ]  
+    ]
   }
 }
 debug('webpakc base配置创建成功')

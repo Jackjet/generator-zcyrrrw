@@ -11,7 +11,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 //const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置`)
+debug(`合并webpack ${config.build.env.NODE_ENV}环境配置`)
 let webpackConfig = merge(baseWebpackConfig, {
   module: {
     loaders: utils.styleLoaders({
@@ -22,23 +22,27 @@ let webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    filename: utils.assetsPath('js/[name].[chunkhash:8].js'),
+    chunkFilename: utils.assetsPath('js/[name].[chunkhash:8].js')
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.build.env
     }),
 
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false
-    //   },
-    //   sourceMap: true
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        screw_ie8: false,
+        warnings: false
+      },
+      mangle: {
+        screw_ie8: false
+      },
+      sourceMap: true
+    }),
 
     new webpack.optimize.OccurenceOrderPlugin(),
-    new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
+    new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash:8].css')),
     new es3ifyPlugin(),
     new HtmlWebpackPlugin({
       filename: config.build.index,
@@ -87,5 +91,5 @@ let webpackConfig = merge(baseWebpackConfig, {
     }),
   ]
 })
-debug(`合并webpack ${config.dev.env.NODE_ENV}环境配置成功`)
+debug(`合并webpack ${config.build.env.NODE_ENV}环境配置成功`)
 module.exports = webpackConfig

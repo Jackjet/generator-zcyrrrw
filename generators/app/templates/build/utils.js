@@ -22,7 +22,15 @@ exports.cssLoaders = (options) => {
         loader = loader + '-loader'
         extraParamChar = '?'
       }
-      return loader + (options.sourceMap ? extraParamChar + 'sourceMap' : '')
+
+      let params = []
+      if (options.minimize) {
+        params.push('minimize')
+      }
+      if (options.sourceMap) {
+        params.push('sourceMap')
+      }
+      return loader + (params.length ? extraParamChar + params.join('&') : '')
     }).join('!')
 
     if (options.extract) {

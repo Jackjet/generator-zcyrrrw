@@ -1,8 +1,4 @@
-// ------------------------------------
-// Constants
-// ------------------------------------
 const TABLE_LIST = 'TABLE_LIST'
-
 
 export const getList = (type) => {
   return (dispatch, getState) => {
@@ -101,11 +97,6 @@ export const getList = (type) => {
   }
 }
 
-
-// ------------------------------------
-// Action Handlers
-// ------------------------------------
-
 const ACTION_HANDLERS = {
   [TABLE_LIST]: (state, action) => {
     state.list = action.payload;
@@ -113,9 +104,6 @@ const ACTION_HANDLERS = {
   }
 }
 
-// ------------------------------------
-// Reducer
-// ------------------------------------
 const initialState = {
   list: []
 };
